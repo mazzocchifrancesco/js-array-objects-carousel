@@ -1,0 +1,35 @@
+#caroselloImg > div {
+    height: 50vh;
+    width: 80vw;
+    display: none
+}
+
+#caroselloImg > div > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+
+}
+body {    height: 100vh;}
+#thumbnails {
+    width: 25%;
+    height: 100%;
+    z-index: 800;
+}
+
+#thumbnails img {
+    width: 100%;
+    height: calc(100% / 5);
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(50%);
+}
+
+.active {    display: block!important;}
+.selected {    
+    filter: brightness(100%)!important;
+    border: 1px solid white;
+}
+
+.btn {z-index: 9999;}
