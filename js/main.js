@@ -2,6 +2,9 @@
 const containerSchede = document.getElementById("caroselloImg");
 const thumbnails = document.getElementById("thumbnails");
 let autoInterval;
+let revertInterval;
+let fixTimer=0;
+
 
 const images = [
     {
@@ -92,6 +95,9 @@ play.addEventListener("click", autoTimer);
 // autoplay stop
 const stop = document.getElementById("stop");
 stop.addEventListener("click", stopInterval);
+// autoplay revert
+const revert = document.getElementById("revert");
+revert.addEventListener("click", revertTimer);
 
 
 // FUNZIONI ////////////////////////////////////////////////////////////////////
@@ -140,11 +146,24 @@ function avanti() {
 }
 
 function autoTimer() {
-    autoInterval = setInterval(avanti, 3000);
+    if (fixTimer==0) {
+        autoInterval = setInterval(avanti, 3000);
+        fixTimer++;
+        console.log("ciao")
+    }
+}
+function revertTimer() {
+    if (fixTimer==0) {
+    revertInterval = setInterval(indietro, 3000);
+    fixTimer++;
+    }
 }
 
 function stopInterval() {
     clearInterval(autoInterval);
+    clearInterval(revertInterval);
+    fixTimer=0;
+
 }
 
 function clearActive() {
