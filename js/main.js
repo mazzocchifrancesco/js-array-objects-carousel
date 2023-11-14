@@ -68,9 +68,6 @@ images.forEach(function (element, index, array) {
     document.getElementById("scheda"+index).classList.add('active');
     document.getElementById("img"+index).classList.add('selected');
     })
-
-
-
 });
 
 // display prima scheda
@@ -87,9 +84,44 @@ currentPic.classList.add("selected");
 
 // bottoni
 const prevBtn = document.getElementById("prev");
+prevBtn.addEventListener("click", indietro);
 
-prevBtn.addEventListener("click", function () {
+const nextBtn = document.getElementById("next");
+nextBtn.addEventListener("click", avanti);
 
+
+// autoplay
+const autoplay = setInterval (avanti, 3000);
+
+// FUNZIONI ////////////////////////////////////////////////////////////////////
+
+function avanti () {
+    if (idNumber > 0) {
+        currentScheda.classList.remove("active");
+        currentPic.classList.remove("selected");
+        idNumber--;
+        idTemp = "scheda" + idNumber;
+        idImg = "img" + idNumber;
+        currentScheda = document.getElementById(idTemp);
+        currentPic = document.getElementById(idImg);
+        currentScheda.classList.add("active");
+        currentPic.classList.add("selected");
+    }
+    else if (idNumber == 0) {
+        currentScheda.classList.remove("active");
+        currentPic.classList.remove("selected");
+        idNumber = images.length - 1;
+        idTemp = "scheda" + idNumber;
+        idImg = "img" + idNumber;
+        currentScheda = document.getElementById(idTemp);
+        currentPic = document.getElementById(idImg);
+        currentScheda.classList.add("active");
+        currentPic.classList.add("selected");
+    }
+    
+}
+
+function indietro() {
     if (idNumber < images.length - 1) {
         currentScheda.classList.remove("active");
         currentPic.classList.remove("selected");
@@ -116,31 +148,10 @@ prevBtn.addEventListener("click", function () {
         currentPic.classList.add("selected");
         currentScheda.classList.add("active");
     }
-});
+}
 
-const nextBtn = document.getElementById("next");
 
-nextBtn.addEventListener("click", function () {
-    if (idNumber > 0) {
-        currentScheda.classList.remove("active");
-        currentPic.classList.remove("selected");
-        idNumber--;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentScheda.classList.add("active");
-        currentPic.classList.add("selected");
-    }
-    else if (idNumber == 0) {
-        currentScheda.classList.remove("active");
-        currentPic.classList.remove("selected");
-        idNumber = images.length - 1;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentScheda.classList.add("active");
-        currentPic.classList.add("selected");
-    }
-});
+
+// aggiungi funzioni in fondo per semplificare
+// togli ripetizioni dove ci sono e semplifica
+//check nomi variabili
