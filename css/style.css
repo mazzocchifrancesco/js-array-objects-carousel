@@ -1,21 +1,32 @@
-#caroselloImg > div {
+.scheda {
     height: 50vh;
     width: 80vw;
     display: none
 }
-
-#caroselloImg > div > img {
+.scheda > div {
+    position:absolute;
+    right:27%;
+    bottom:1rem;
+    color: white;
+    text-align: end;
+    font-size: 20px;
+    font-weight: 600;
+}
+.scheda > img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
 
 }
+
 body {    height: 100vh;}
 #thumbnails {
     width: 25%;
     height: 100%;
     z-index: 800;
+    display: flex;
+    flex-direction: column;
 }
 
 #thumbnails img {
