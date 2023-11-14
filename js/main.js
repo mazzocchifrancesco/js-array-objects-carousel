@@ -1,6 +1,7 @@
 // variabili
 const containerSchede = document.getElementById("caroselloImg");
 const thumbnails = document.getElementById("thumbnails");
+let autoInterval;
 
 const images = [
     {
@@ -58,6 +59,8 @@ images.forEach(function (element, index, array) {
     imgThumb.src = img.src;
     imgThumb.id = "img" + index;
     thumbnails.appendChild(imgThumb);
+
+    // thumbnails cliccabili
     imgThumb.addEventListener("click", () => {
         clearActive();
         scheda.classList.add('active');
@@ -96,7 +99,7 @@ stop.addEventListener("click", stopInterval);
 function indietro () {
     currentScheda = document.getElementsByClassName('active')[0];
     currentPic = document.getElementsByClassName('selected')[0];
-    let idScheda=currentScheda.id
+    let idScheda=currentScheda.id.replace(/^\D+/g, '');
     idTemp=idScheda.replace(/^\D+/g, '');
 
     if (idTemp > 0) {
@@ -137,8 +140,9 @@ function avanti() {
 }
 
 function autoTimer() {
-    const autoInterval = setInterval(avanti, 3000);
+    autoInterval = setInterval(avanti, 3000);
 }
+
 function stopInterval() {
     clearInterval(autoInterval);
 }
