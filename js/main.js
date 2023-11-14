@@ -58,6 +58,16 @@ images.forEach(function (element, index, array) {
     imgThumb.src = img.src;
     imgThumb.id = "img" + index;
     thumbnails.appendChild(imgThumb);
+    imgThumb.addEventListener("click", () => {
+        let i=0;
+        do {
+            document.getElementById("scheda"+i).classList.remove('active');
+            document.getElementById("img"+i).classList.remove('selected');
+            i++;
+        } while (i<images.length);
+    document.getElementById("scheda"+index).classList.add('active');
+    document.getElementById("img"+index).classList.add('selected');
+    })
 
 
 
