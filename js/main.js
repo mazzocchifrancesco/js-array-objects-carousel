@@ -59,26 +59,19 @@ images.forEach(function (element, index, array) {
     imgThumb.id = "img" + index;
     thumbnails.appendChild(imgThumb);
     imgThumb.addEventListener("click", () => {
-        let i=0;
-        do {
-            document.getElementById("scheda"+i).classList.remove('active');
-            document.getElementById("img"+i).classList.remove('selected');
-            i++;
-        } while (i<images.length);
-    document.getElementById("scheda"+index).classList.add('active');
-    document.getElementById("img"+index).classList.add('selected');
+        clearActive();
+        scheda.classList.add('active');
+        imgThumb.classList.add('selected');
     })
 });
 
 // display prima scheda
-let idNumber = 0;
-let idTemp = "scheda" + idNumber;
-let currentScheda = document.getElementById(idTemp);
+let idTemp = 0;
+let currentScheda = document.getElementById("scheda"+idTemp);
 currentScheda.classList.add("active");
 
 // display prima thumb
-let idImg = "img" + idNumber;
-let currentPic = document.getElementById(idImg);
+let currentPic = document.getElementById("img"+idTemp);
 currentPic.classList.add("selected");
 
 
@@ -90,68 +83,74 @@ const nextBtn = document.getElementById("next");
 nextBtn.addEventListener("click", avanti);
 
 
-// autoplay
-const autoplay = setInterval (avanti, 3000);
+// autoplay start
+const play = document.getElementById("autoplay");
+play.addEventListener("click", autoTimer);
+// autoplay stop
+const stop = document.getElementById("stop");
+stop.addEventListener("click", stopInterval);
+
 
 // FUNZIONI ////////////////////////////////////////////////////////////////////
 
-function avanti () {
-    if (idNumber > 0) {
+function indietro () {
+    currentScheda = document.getElementsByClassName('active')[0];
+    currentPic = document.getElementsByClassName('selected')[0];
+    let idScheda=currentScheda.id
+    idTemp=idScheda.replace(/^\D+/g, '');
+
+    if (idTemp > 0) {
         currentScheda.classList.remove("active");
         currentPic.classList.remove("selected");
-        idNumber--;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentScheda.classList.add("active");
-        currentPic.classList.add("selected");
+
+        idTemp--;
     }
-    else if (idNumber == 0) {
-        currentScheda.classList.remove("active");
-        currentPic.classList.remove("selected");
-        idNumber = images.length - 1;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentScheda.classList.add("active");
-        currentPic.classList.add("selected");
+    else if (idTemp == 0) {
+        clearActive()
+        idTemp = images.length -1;
     }
-    
+    currentScheda=document.getElementById("scheda"+idTemp)
+    currentPic=document.getElementById("img"+idTemp)
+    currentScheda.classList.add("active");
+    currentPic.classList.add("selected");
+
 }
 
-function indietro() {
-    if (idNumber < images.length - 1) {
-        currentScheda.classList.remove("active");
-        currentPic.classList.remove("selected");
-        idNumber++;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
+function avanti() {
+    currentScheda = document.getElementsByClassName('active')[0];
+    currentPic = document.getElementsByClassName('selected')[0];
+    let idScheda=currentScheda.id
+    idTemp=idScheda.replace(/^\D+/g, '');
 
-        // posso rimuovere sta ripetizione??-----------------------------------------------
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentScheda.classList.add("active");
-        currentPic.classList.add("selected");
-
+    if (idTemp < images.length - 1) {
+        clearActive()
+        idTemp++;
     }
-
-    else if (idNumber == images.length - 1) {
-        currentScheda.classList.remove("active");
-        currentPic.classList.remove("selected");
-        idNumber = 0;
-        idTemp = "scheda" + idNumber;
-        idImg = "img" + idNumber;
-        currentScheda = document.getElementById(idTemp);
-        currentPic = document.getElementById(idImg);
-        currentPic.classList.add("selected");
-        currentScheda.classList.add("active");
+    else if (idTemp == images.length - 1) {
+        clearActive()
+        idTemp = 0;
     }
+    currentScheda=document.getElementById("scheda"+idTemp)
+    currentPic=document.getElementById("img"+idTemp)
+    currentScheda.classList.add("active");
+    currentPic.classList.add("selected");
 }
 
+function autoTimer() {
+    const autoInterval = setInterval(avanti, 3000);
+}
+function stopInterval() {
+    clearInterval(autoInterval);
+}
 
-
+function clearActive() {
+    let i = 0;
+    do {
+        document.getElementById("scheda"+i).classList.remove('active');
+        document.getElementById("img"+i).classList.remove('selected');
+        i++;
+    } while (i < images.length);
+}
 // aggiungi funzioni in fondo per semplificare
 // togli ripetizioni dove ci sono e semplifica
 //check nomi variabili
